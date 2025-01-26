@@ -1,216 +1,289 @@
 'use client'
 import { motion } from 'framer-motion';
-import { Heart, PawPrint, Phone, Mail, HomeIcon, Clock } from 'lucide-react';
+import { Camera, Heart, Footprints, Upload, Phone, Home, PawPrint, Heart as HeartIcon, Info, Users, Calendar } from 'lucide-react';
+import { useState } from 'react';
 
-export default function Home() {
-  const animals = [
+const EmergencyPetReport = () => {
+  const [isUploading, setIsUploading] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [uploadedImage, setUploadedImage] = useState(null);
+
+  const handleUpload = () => {
+    setIsUploading(true);
+    setTimeout(() => {
+      setIsUploading(false);
+      setShowSuccess(true);
+      setTimeout(() => setShowSuccess(false), 3000);
+    }, 2000);
+  };
+
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            setUploadedImage(reader.result);
+        };
+        reader.readAsDataURL(file);
+    }
+  }
+
+    const handleImageUpload = async (event) => {
+      handleImageChange(event);
+      // This is where you would send the uploaded image to your backend.
+      // Example: const response = await fetch('/api/upload', { method: 'POST', body: JSON.stringify({ image: uploadedImage }) });
+    };
+
+  const stats = [
+    { icon: HeartIcon, value: "15,000+", label: "Animals Rescued" },
+    { icon: Home, value: "8,000+", label: "Successful Adoptions" },
+    { icon: Users, value: "5,000+", label: "Active Volunteers" },
+    { icon: Calendar, value: "24/7", label: "Emergency Response" }
+  ];
+
+  const successStories = [
     {
       name: "Luna",
-      type: "Dog",
-      age: "2 years",
-      image: "/api/placeholder/400/300",
-      description: "Friendly and energetic Golden Retriever looking for an active family"
+      description: "Found injured on the streets, now living her best life with a loving family",
+      image: "/api/placeholder/300/200"
     },
     {
-      name: "Whiskers",
-      type: "Cat",
-      age: "1 year",
-      image: "/api/placeholder/400/300",
-      description: "Sweet and gentle tabby cat who loves cuddles"
+      name: "Max",
+      description: "Rescued from a drain during monsoon, now a therapy dog helping others",
+      image: "/api/placeholder/300/200"
     },
     {
-      name: "Rocky",
-      type: "Dog",
-      age: "3 years",
-      image: "/api/placeholder/400/300",
-      description: "Loyal German Shepherd mix with a heart of gold"
+      name: "Bella",
+      description: "Survived a car accident, now spreading joy in her forever home",
+      image: "/api/placeholder/300/200"
     }
   ];
 
   return (
-    <div className="min-h-screen bg-amber-50">
-      {/* Hero Section */}
-      <motion.header 
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="relative h-screen flex items-center justify-center"
-      >
-        <div className="absolute inset-0">
-          <img 
-            src="/api/placeholder/1920/1080" 
-            alt="Hero" 
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-black bg-opacity-50" />
-        </div>
-        
-        <div className="relative z-10 text-center text-white">
-          <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="text-6xl font-bold mb-6"
+    <div className="min-h-screen bg-gradient-to-b from-rose-50 to-rose-100 relative overflow-hidden">
+      {/* Floating Paw Prints Background */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {[...Array(20)].map((_, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, scale: 0 }}
+            animate={{ 
+              opacity: [0, 1, 0],
+              scale: [0, 1, 0],
+              x: Math.random() * 100,
+              y: Math.random() * 100,
+            }}
+            transition={{
+              duration: 10,
+              repeat: Infinity,
+              delay: i * 2,
+              ease: "easeInOut"
+            }}
+            className="absolute"
           >
-            Give Them a Forever Home
-          </motion.h1>
-          <motion.p 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4 }}
-            className="text-xl mb-8"
-          >
-            Every pet deserves a loving family
-          </motion.p>
-          <motion.button 
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            className="bg-amber-500 text-white px-8 py-3 rounded-full font-semibold text-lg hover:bg-amber-600 transition-colors"
-          >
-            Adopt Now
-          </motion.button>
-        </div>
+            <Footprints className="w-8 h-8 text-rose-200" />
+          </motion.div>
+        ))}
+      </div>
 
-        <motion.div 
-          animate={{ 
-            y: [0, -10, 0],
-          }}
-          transition={{ 
-            duration: 2,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-          className="absolute bottom-8 text-white"
+      {/* Navigation */}
+     
+
+      {/* Main Content */}
+      <div className="container mx-auto px-4 py-12 relative z-10">
+        {/* Emergency Header */}
+        <motion.div
+          initial={{ y: -50, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          className="text-center mb-12"
         >
-          <PawPrint className="w-8 h-8" />
+          <h1 className="text-5xl md:text-7xl font-bold text-rose-600 mb-6">
+            Help Them Heal
+          </h1>
+          <p className="text-xl md:text-2xl text-gray-700 max-w-2xl mx-auto">
+            Spotted an injured animal? Take a quick photo and we'll dispatch help immediately.
+          </p>
         </motion.div>
-      </motion.header>
 
-      {/* Featured Pets Section */}
-      <section className="py-20 px-4 md:px-8">
-        <h2 className="text-4xl font-bold text-center mb-12 text-amber-800">Meet Our Furry Friends</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-          {animals.map((animal, index) => (
-            <motion.div
-              key={animal.name}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.2 }}
-              className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow"
-            >
-              <img src={animal.image} alt={animal.name} className="w-full h-48 object-cover" />
-              <div className="p-6">
-                <h3 className="text-2xl font-semibold mb-2 text-amber-800">{animal.name}</h3>
-                <p className="text-gray-600 mb-2">{animal.type} • {animal.age}</p>
-                <p className="text-gray-700">{animal.description}</p>
-                <motion.button 
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="mt-4 flex items-center gap-2 bg-amber-500 text-white px-6 py-2 rounded-full hover:bg-amber-600 transition-colors"
-                >
-                  <Heart className="w-4 h-4" />
-                  Meet Me
-                </motion.button>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </section>
-
-      {/* Why Adopt Section */}
-      <section className="bg-amber-100 py-20 px-4 md:px-8">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-4xl font-bold text-center mb-12 text-amber-800">Why Adopt?</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              { icon: Heart, title: "Save a Life", text: "Give a homeless pet a second chance at happiness" },
-              { icon: HomeIcon, title: "Find Your Best Friend", text: "Discover unconditional love and companionship" },
-              { icon: PawPrint, title: "Make a Difference", text: "Help reduce the number of pets in shelters" }
-            ].map((item, index) => (
-              <motion.div 
-                key={item.title}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.2 }}
-                className="text-center"
+        {/* Main Upload Section */}
+        <div className="max-w-4xl mx-auto mb-20">
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ delay: 0.2 }}
+            className="bg-white rounded-3xl shadow-2xl overflow-hidden"
+          >
+            <div className="p-8 md:p-12">
+              {/* Upload Zone */}
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                className="border-4 border-dashed border-rose-200 rounded-2xl p-8 text-center bg-rose-50 relative overflow-hidden"
               >
-                <div className="bg-white w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <item.icon className="w-8 h-8 text-amber-500" />
+                <input 
+                  type="file"
+                  className="absolute inset-0 opacity-0 cursor-pointer z-10"
+                  accept="image/*"
+                  onChange={handleImageUpload}
+                />
+                <div className="space-y-4">
+                  <motion.div
+                    animate={{
+                      scale: [1, 1.1, 1],
+                    }}
+                    transition={{
+                      duration: 2,
+                      repeat: Infinity,
+                    }}
+                  >
+                    <Camera className="w-16 h-16 text-rose-400 mx-auto" />
+                  </motion.div>
+                  <h3 className="text-2xl font-semibold text-gray-800">
+                    Take or Upload a Photo
+                  </h3>
+                  <p className="text-gray-600">
+                    {/* to make it easy to be accessible by the backend */}
+                    {/* you would easily send the  image using this value */}
+                    {uploadedImage&&<p className="text-green-500">uploaded image</p>}
+                    
+                    Click here to capture or upload an image of the injured animal
+                  </p>
                 </div>
-                <h3 className="text-xl font-semibold mb-2 text-amber-800">{item.title}</h3>
-                <p className="text-gray-700">{item.text}</p>
+              </motion.div>
+
+              {/* Emergency Instructions */}
+              <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="bg-rose-50 rounded-xl p-6">
+                  {/* <AlertCircle className="w-8 h-8 text-rose-500 mb-4" /> */}
+                  <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                    Stay at a Safe Distance
+                  </h3>
+                  <p className="text-gray-600">
+                    Keep yourself safe while helping. Don't approach injured animals directly.
+                  </p>
+                </div>
+                <div className="bg-rose-50 rounded-xl p-6">
+                  <Phone className="w-8 h-8 text-rose-500 mb-4" />
+                  <h3 className="text-lg font-semibold text-gray-800 mb-2">
+                    Emergency Support
+                  </h3>
+                  <p className="text-gray-600">
+                    Call us at 1-800-PET-HELP for immediate assistance
+                  </p>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+
+        {/* Impact Statistics */}
+        <div className="mb-20">
+          <h2 className="text-4xl font-bold text-center text-gray-800 mb-12">Our Impact</h2>
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            {stats.map((stat, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+                className="bg-white rounded-xl p-6 text-center shadow-lg"
+              >
+                <stat.icon className="w-12 h-12 text-rose-500 mx-auto mb-4" />
+                <h3 className="text-3xl font-bold text-gray-800">{stat.value}</h3>
+                <p className="text-gray-600">{stat.label}</p>
               </motion.div>
             ))}
           </div>
         </div>
-      </section>
 
-      {/* Contact Section */}
-      <section className="py-20 px-4 md:px-8">
-        <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-xl p-8">
-          <h2 className="text-4xl font-bold text-center mb-12 text-amber-800">Contact Us</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="space-y-6">
-              <div className="flex items-center gap-4">
-                <Phone className="w-6 h-6 text-amber-500" />
-                <div>
-                  <h3 className="font-semibold text-amber-800">Phone</h3>
-                  <p className="text-gray-600">+1 (555) 123-4567</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-4">
-                <Mail className="w-6 h-6 text-amber-500" />
-                <div>
-                  <h3 className="font-semibold text-amber-800">Email</h3>
-                  <p className="text-gray-600">adopt@pawfriends.com</p>
-                </div>
-              </div>
-              <div className="flex items-center gap-4">
-                <Clock className="w-6 h-6 text-amber-500" />
-                <div>
-                  <h3 className="font-semibold text-amber-800">Hours</h3>
-                  <p className="text-gray-600">Mon-Sat: 9AM-6PM</p>
-                </div>
-              </div>
+        {/* Why Adopt Section */}
+        <div className="mb-20">
+          <h2 className="text-4xl font-bold text-center text-gray-800 mb-12">Why Adopt a Stray?</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="bg-white rounded-xl p-6 text-center">
+              <Heart className="w-12 h-12 text-rose-500 mb-4" />
+              <h3 className="text-xl font-semibold mb-4">Save a Life</h3>
+              <p className="text-gray-600">
+                Every adoption opens up space for another animal in need. You're not just giving one animal a home - you're helping many.
+              </p>
             </div>
-            <form className="space-y-4">
-              <input 
-                type="text" 
-                placeholder="Your Name" 
-                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-amber-500"
-              />
-              <input 
-                type="email" 
-                placeholder="Your Email" 
-                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-amber-500"
-              />
-              <textarea 
-                placeholder="Your Message" 
-                rows={4}
-                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-amber-500"
-              />
-              <motion.button 
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="w-full bg-amber-500 text-white px-6 py-3 rounded-lg hover:bg-amber-600 transition-colors"
-              >
-                Send Message
-              </motion.button>
-            </form>
+            <div className="bg-white rounded-xl p-6 text-center">
+              <Users className="w-12 h-12 text-rose-500 mb-4" />
+              <h3 className="text-xl font-semibold mb-4">Loyal Companionship</h3>
+              <p className="text-gray-600">
+                Rescued animals often show extraordinary loyalty and affection, knowing they've been given a second chance.
+              </p>
+            </div>
+            <div className="bg-white rounded-xl p-6 text-center">
+              <Info className="w-12 h-12 text-rose-500 mb-4" />
+              <h3 className="text-xl font-semibold mb-4">Combat Overpopulation</h3>
+              <p className="text-gray-600">
+                Adoption helps reduce the stray animal population and promotes responsible pet ownership in your community.
+              </p>
+            </div>
           </div>
         </div>
-      </section>
+
+        {/* Success Stories */}
+        <div className="mb-20">
+          <h2 className="text-4xl font-bold text-center text-gray-800 mb-12">Success Stories</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {successStories.map((story, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+                className="bg-white rounded-xl overflow-hidden shadow-lg"
+              >
+                <img src={story.image} alt={story.name} className="w-full h-48 object-cover" />
+                <div className="p-6">
+                  <h3 className="text-xl font-semibold mb-2">{story.name}</h3>
+                  <p className="text-gray-600">{story.description}</p>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+
+        {/* Loading Overlay */}
+        {isUploading && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+          >
+            <div className="bg-white rounded-2xl p-8 text-center">
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+              >
+                <Upload className="w-12 h-12 text-rose-500" />
+              </motion.div>
+              <p className="mt-4 text-lg font-semibold">Uploading photo...</p>
+            </div>
+          </motion.div>
+        )}
+
+        {/* Success Message */}
+        {showSuccess && (
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 50 }}
+            className="fixed bottom-8 left-1/2 transform -translate-x-1/2 bg-green-500 text-white px-8 py-4 rounded-full shadow-lg"
+          >
+            <div className="flex items-center gap-2">
+              <Heart className="w-6 h-6" />
+              <span>Photo uploaded successfully! Help is on the way.</span>
+            </div>
+          </motion.div>
+        )}
+      </div>
 
       {/* Footer */}
-      <footer className="bg-amber-800 text-white py-8 px-4">
-        <div className="max-w-7xl mx-auto text-center">
-          <p className="mb-4">© 2025 PawFriends Animal Adoption. All rights reserved.</p>
-          <div className="flex justify-center gap-4">
-            <a href="#" className="hover:text-amber-300 transition-colors">About</a>
-            <a href="#" className="hover:text-amber-300 transition-colors">Privacy</a>
-            <a href="#" className="hover:text-amber-300 transition-colors">Terms</a>
-          </div>
-        </div>
-      </footer>
+     
     </div>
   );
 }
+
+export default EmergencyPetReport;
