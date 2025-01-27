@@ -23,7 +23,7 @@ const Card = ({
   )
 }
 
-const CardHeader = ({ 
+const CardTitle = ({ 
   children, 
   className = '', 
   ...props 
@@ -86,7 +86,7 @@ Card.propTypes = {
   className: PropTypes.string
 }
 
-CardHeader.propTypes = {
+CardTitle.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string
 }
@@ -101,4 +101,4 @@ CardFooter.propTypes = {
   className: PropTypes.string
 }
 
-export { Card, CardHeader, CardContent, CardFooter }
+export { Card, CardTitle, CardContent, CardFooter }

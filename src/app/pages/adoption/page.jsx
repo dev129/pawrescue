@@ -8,7 +8,7 @@ import {
 } from 'lucide-react';
 import  Button  from "@/components/Button";
 import { Card, CardContent } from "@/components/Card";
-
+import Footer from '@/components/Footer'
 const animals = [
   {
     id: 1,
@@ -186,13 +186,7 @@ const page = () => {
       </div>
 
       {/* Footer */}
-      <footer className="bg-green-800 text-white py-12">
-        <div className="container mx-auto px-4 text-center">
-          <p className="mb-4">
-            © 2025 Animal Haven. Every Life Deserves a Loving Home.
-          </p>
-        </div>
-      </footer>
+      <Footer/>
     </div>
   );
 };
