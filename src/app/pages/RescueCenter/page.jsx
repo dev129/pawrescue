@@ -1,9 +1,9 @@
 'use client';
 import { useState } from 'react';
 import { AlertCircle, Upload, CheckCircle } from 'lucide-react';
-import  Button  from "@/components/ui/Button";
-import { Card, CardContent, CardTitle, CardFooter } from "@/components/ui/Card";
-import { Alert, AlertDescription } from "@/components/ui/alert";
+import  Button  from "../../../components/ui/Button";
+import { Card, CardContent, CardTitle, CardFooter } from "../../../components/ui/Card";
+import { Alert,AlertTitle, AlertDescription } from "../../../components/ui/alert";
 
 const RescueCenterRegistration = () => {
   const [formData, setFormData] = useState({
@@ -160,7 +160,7 @@ const RescueCenterRegistration = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
+    <div className="min-h-screen bg-gray-50 py-12 text-black">
       <div className="container mx-auto px-4">
         <Card className="max-w-4xl mx-auto">
           <CardTitle>

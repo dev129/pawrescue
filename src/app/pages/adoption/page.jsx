@@ -6,9 +6,9 @@ import {
   DogIcon, CatIcon, BirdIcon, 
   RabbitIcon, HeartHandshake 
 } from 'lucide-react';
-import  Button  from "@/components/Button";
-import { Card, CardContent } from "@/components/Card";
-import Footer from '@/components/Footer'
+import  Button  from "../../../components/ui/Button";
+import { Card, CardContent } from "../../../components/ui/Card";
+import Footer from '../../../components/Footer'
 const animals = [
   {
     id: 1,
