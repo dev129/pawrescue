@@ -10,8 +10,11 @@
   },
   "dependencies": {
     "autoprefixer": "^10.4.20",
+    "body-parser": "^1.20.3",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
     "framer-motion": "^11.18.1",
     "lucide-react": "^0.473.0",
     "next": "15.1.4",
