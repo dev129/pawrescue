@@ -114,8 +114,11 @@ const RescueCenterRegistration = () => {
       });
 
       // Example API call - replace with your actual endpoint
-      const response = await fetch('http://127.0.0.1:8000/api/rescue/', {
+      const response = await fetch("http://127.0.0.1:8000/upload/", {
         method: 'POST',
+        // headers: {
+        //   'Content-Type': 'multipart/form-data'
+        // },
         body: submitData
       });
 
