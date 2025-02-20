@@ -1,46 +1,30 @@
 'use client';
 import { useState } from 'react';
 import { AlertCircle, Upload, CheckCircle } from 'lucide-react';
-import  Button  from "../../../components/ui/Button";
+import Button from "../../../components/ui/Button";
 import { Card, CardContent, CardTitle, CardFooter } from "../../../components/ui/Card";
-import { Alert,AlertTitle, AlertDescription } from "../../../components/ui/alert";
+import { Alert, AlertTitle, AlertDescription } from "../../../components/ui/alert";
 
 const RescueCenterRegistration = () => {
   const [formData, setFormData] = useState({
     // Basic Information
-    centerName: '',
-    registrationNumber: '',
-    yearEstablished: '',
-    
+    center_name: '',
+    registration_number: '',
     // Contact Information
     email: '',
     phone: '',
-    alternatePhone: '',
-    
     // Address Information
-    addressLine1: '',
-    addressLine2: '',
+    address_line_1: '',
     city: '',
     state: '',
     pincode: '',
     landmark: '',
-    
-    // Operational Details
-    operatingHours: '',
-    emergencyService: false,
-    capacity: '',
-    
-    // Staff Information
-    veterinarians: '',
-    staffCount: '',
-    
     // Facilities
     facilities: [],
     specializations: [],
-    
     // Documents
-    form12A: null,
-    form13A: null
+    form_12a: null,
+    form_13a: null
   });
 
   const [loading, setLoading] = useState(false);
@@ -93,71 +77,64 @@ const RescueCenterRegistration = () => {
     e.preventDefault();
     setLoading(true);
     setError('');
-
+  
     try {
       // Create FormData object for file upload
       const submitData = new FormData();
       
       // Append all form fields
       Object.keys(formData).forEach(key => {
-        if (key === 'form12A' || key === 'form13A') {
+        if (key === 'form_12a' || key === 'form_13a') {
           if (formData[key]) {
             submitData.append(key, formData[key]);
           }
         } else {
           submitData.append(key, 
             Array.isArray(formData[key]) 
-              ? JSON.stringify(formData[key]) 
+              ? JSON.stringify(formData[key])  // This stringifies the 'facilities' array
               : formData[key]
           );
         }
       });
-
+  
       // Example API call - replace with your actual endpoint
-      const response = await fetch('http://127.0.0.1:8000/api/rescue/', {
+      const response = await fetch('http://127.0.0.1:8000/upload/', {
         method: 'POST',
         body: submitData
       });
-
+  
       if (!response.ok) {
         throw new Error('Registration failed');
       }
-
+  
       setSuccess(true);
       // Reset form after successful submission
       setTimeout(() => {
         setSuccess(false);
         setFormData({
-          centerName: '',
-          registrationNumber: '',
-          yearEstablished: '',
+          center_name: '',
+          registration_number: '',
           email: '',
           phone: '',
-          alternatePhone: '',
-          addressLine1: '',
-          addressLine2: '',
+          address_line_1: '',
           city: '',
           state: '',
           pincode: '',
           landmark: '',
-          operatingHours: '',
-          emergencyService: false,
-          capacity: '',
-          veterinarians: '',
-          staffCount: '',
           facilities: [],
           specializations: [],
-          form12A: null,
-          form13A: null
+          form_12a: null,
+          form_13a: null
         });
       }, 3000);
-
+  
     } catch (err) {
       setError(err.message || 'Something went wrong');
     } finally {
       setLoading(false);
     }
   };
+  
 
   return (
     <div className="min-h-screen bg-gray-50 py-12 text-black">
@@ -180,8 +157,8 @@ const RescueCenterRegistration = () => {
                     </label>
                     <input
                       type="text"
-                      name="centerName"
-                      value={formData.centerName}
+                      name="center_name"
+                      value={formData.center_name}
                       onChange={handleInputChange}
                       required
                       className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
@@ -193,8 +170,8 @@ const RescueCenterRegistration = () => {
                     </label>
                     <input
                       type="text"
-                      name="registrationNumber"
-                      value={formData.registrationNumber}
+                      name="registration_number"
+                      value={formData.registration_number}
                       onChange={handleInputChange}
                       required
                       className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
@@ -246,8 +223,8 @@ const RescueCenterRegistration = () => {
                     </label>
                     <input
                       type="text"
-                      name="addressLine1"
-                      value={formData.addressLine1}
+                      name="address_line_1"
+                      value={formData.address_line_1}
                       onChange={handleInputChange}
                       required
                       className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
@@ -346,19 +323,19 @@ const RescueCenterRegistration = () => {
                     <div className="relative">
                       <input
                         type="file"
-                        name="form12A"
+                        name="form_12a"
                         onChange={handleFileUpload}
                         accept=".pdf"
                         required
                         className="hidden"
-                        id="form12A"
+                        id="form_12a"
                       />
                       <label
-                        htmlFor="form12A"
+                        htmlFor="form_12a"
                         className="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 cursor-pointer"
                       >
                         <Upload className="w-5 h-5 mr-2" />
-                        {formData.form12A ? formData.form12A.name : 'Upload Form 12A'}
+                        {formData.form_12a ? formData.form_12a.name : 'Upload Form 12A'}
                       </label>
                     </div>
                   </div>
@@ -371,19 +348,19 @@ const RescueCenterRegistration = () => {
                     <div className="relative">
                       <input
                         type="file"
-                        name="form13A"
+                        name="form_13a"
                         onChange={handleFileUpload}
                         accept=".pdf"
                         required
                         className="hidden"
-                        id="form13A"
+                        id="form_13a"
                       />
                       <label
-                        htmlFor="form13A"
+                        htmlFor="form_13a"
                         className="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 cursor-pointer"
                       >
                         <Upload className="w-5 h-5 mr-2" />
-                        {formData.form13A ? formData.form13A.name : 'Upload Form 13A'}
+                        {formData.form_13a ? formData.form_13a.name : 'Upload Form 13A'}
                       </label>
                     </div>
                   </div>

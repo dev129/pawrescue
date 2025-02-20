@@ -1,4 +1,5 @@
 import React from 'react';
+import { AiFillMail } from "react-icons/ai"; 
 import { MapPin, Star, Shield, Clock, Phone, Check } from 'lucide-react';
 import { Card, CardContent } from '../../../components/ui/Card';
 
@@ -49,13 +50,14 @@ const RescueCenterCard = () => {
     }
   ];
 
+
   return (
     <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         {/* Header Section */}
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            Nearby Rescue Centers
+            Nearby Rescue Centers 
           </h1>
           <p className="text-lg text-gray-600">
             Find trusted animal rescue centers in your area
@@ -66,21 +68,7 @@ const RescueCenterCard = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {rescueCenters.map((center, index) => (
             <Card key={index} className="overflow-hidden hover:shadow-lg transition duration-300">
-              {/* Image Section */}
-              <div className="relative h-48 w-full">
-                <img
-                  src={`https://picsum.photos/seed/${index}/800/400`}
-                  alt={center.name}
-                  className="w-full h-full object-cover"
-                />
-                {center.verified && (
-                  <div className="absolute top-4 right-4 bg-blue-500 text-white p-1 rounded-full">
-                    <Check className="w-4 h-4" />
-                  </div>
-                )}
-              </div>
-
-              <CardContent className="p-6">
+                <CardContent className="p-6">
                 {/* Header Info */}
                 <div className="mb-4">
                   <div className="flex justify-between items-start">
@@ -136,10 +124,16 @@ const RescueCenterCard = () => {
                 </div>
 
                 {/* Contact Button */}
-                <button className="w-full mt-4 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300 flex items-center justify-center">
+                <div className='flex  justify-between gap-2'>
+                <button className="w-1/2 mt-4 bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition duration-300 flex items-center justify-center">
                   <Phone className="w-4 h-4 mr-2" />
                   Contact Center
                 </button>
+                <button className="w-1/2 mt-4 bg-white py-2 px-4 rounded-lg text-blue-700 transition duration-300 flex items-center justify-center" >
+                  <AiFillMail className="w-4 h-4 mr-2" />
+                  Mail them
+                </button>
+                </div>
               </CardContent>
             </Card>
           ))}

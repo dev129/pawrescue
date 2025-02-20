@@ -6,9 +6,11 @@ import {
   DogIcon, CatIcon, BirdIcon, 
   RabbitIcon, HeartHandshake 
 } from 'lucide-react';
-import  Button  from "../../../components/ui/Button";
+import Button from "../../../components/ui/Button";
 import { Card, CardContent } from "../../../components/ui/Card";
-import Footer from '../../../components/Footer'
+import Footer from '../../../components/Footer';
+import chat from '../../../components/ui/Chat';
+
 const animals = [
   {
     id: 1,
@@ -53,6 +55,28 @@ const animals = [
     health: "Senior care needed",
     specialNeeds: true,
     image: "https://picsum.photos/200/200?random=4"
+  },
+  {
+    id: 5,
+    name: "Tweety",
+    species: "Bird",
+    breed: "Parakeet",
+    age: "6 months",
+    personality: "Chirpy and social",
+    health: "Excellent",
+    specialNeeds: false,
+    image: "https://picsum.photos/200/200?random=5"
+  },
+  {
+    id: 6,
+    name: "Hammy",
+    species: "Hamster",
+    breed: "Syrian Hamster",
+    age: "1 year",
+    personality: "Active and playful",
+    health: "Healthy",
+    specialNeeds: false,
+    image: "https://picsum.photos/200/200?random=6"
   }
 ];
 
@@ -60,7 +84,9 @@ const page = () => {
   const [selectedSpecies, setSelectedSpecies] = useState(null);
 
   const filteredAnimals = selectedSpecies 
-    ? animals.filter(animal => animal.species === selectedSpecies)
+    ? selectedSpecies === "Misc."
+      ? animals.filter(animal => !["Dog", "Cat"].includes(animal.species))
+      : animals.filter(animal => animal.species === selectedSpecies)
     : animals;
 
   return (
@@ -80,13 +106,15 @@ const page = () => {
         </motion.div>
       </div>
 
+      
+
       {/* Species Filter */}
       <div className="container mx-auto px-4 py-8">
         <div className="flex justify-center space-x-4 mb-8">
           {[
             { icon: DogIcon, species: "Dog" },
             { icon: CatIcon, species: "Cat" },
-            { icon: RabbitIcon, species: "Rabbit" }
+            { icon: RabbitIcon, species: "Misc." }
           ].map((filter) => (
             <Button
               key={filter.species}
@@ -138,8 +166,8 @@ const page = () => {
                   <p><strong>Personality:</strong> {animal.personality}</p>
                   <p><strong>Health:</strong> {animal.health}</p>
                 </div>
-                <div className="mt-6 flex space-x-2">
-                  <Button className="w-full bg-green-600 hover:bg-green-700">
+                <div className="mt-6">
+                  <Button className="w-full bg-green-600 hover:bg-green-700 flex items-center justify-center">
                     <HeartHandshake className="mr-2" /> Adopt Me
                   </Button>
                 </div>
@@ -149,44 +177,10 @@ const page = () => {
         </div>
       </div>
 
-      {/* Why Adopt Section */}
-      <div className="bg-green-100 py-16">
-        <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-12 text-green-800">
-            Why Adopt?
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              { 
-                icon: PawPrint, 
-                title: "Save a Life", 
-                description: "Your adoption gives an animal a second chance at happiness." 
-              },
-              { 
-                icon: Heart, 
-                title: "Unconditional Love", 
-                description: "Rescue animals offer the most loyal and grateful companionship." 
-              },
-              { 
-                icon: Shield, 
-                title: "Community Impact", 
-                description: "Adoption helps reduce stray animal populations and supports local shelters." 
-              }
-            ].map((item, index) => (
-              <Card key={index} className="text-center p-6 hover:shadow-lg transition-shadow">
-                <CardContent>
-                  <item.icon className="w-16 h-16 text-green-600 mx-auto mb-4" />
-                  <h3 className="text-xl font-semibold mb-3 text-green-800">{item.title}</h3>
-                  <p className="text-gray-600">{item.description}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </div>
+      
 
       {/* Footer */}
-      <Footer/>
+      <Footer />
     </div>
   );
 };
