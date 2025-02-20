@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'product.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME':'industry',
+        'NAME':'paw_rescuee',
         'USER':'root',
         'PASSWORD':'Saarvi35@',
         'HOST':'localhost',
@@ -137,8 +137,8 @@ CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 
 
-MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 REST_FRAMEWORK = {

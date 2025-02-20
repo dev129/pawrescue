@@ -6,25 +6,41 @@ from .serializer import Rescue_serializers
 from rest_framework.parsers import MultiPartParser, FormParser
 
 
-class pawRescue(APIView):
-    
+class pawRescue(APIView):    
     def get(self,request):
         documents=Rescue.objects.all()
         serializer=Rescue_serializers(documents,many=True)
-        return Response(serializer.data)
+        return Response(serializer.data , status=status.HTTP_200_OK)
+
 
 class UploadView(APIView):
-    parser_classes = (MultiPartParser , FormParser)
+    parser_classes = (MultiPartParser, FormParser)        
 
-    def get(self, request):
-        return Response({"message": "GET request received"}, status=status.HTTP_200_OK)
+    def post(self, request, *args, **kwargs):
+        # Extract files from request.FILES and update request.data
+        data = request.data.copy()  # Copy request data to modify it safely
 
-    def post(self,request , *args , **kwargs):
-        serializer1=Rescue_serializers(data=request.data)
-        if serializer1.is_valid():
-            serializer1.save()
-            return Response(serializer1.data,status=status.HTTP_201_CREATED)
+        if request.FILES.get('form_12a'):
+            data['form_12a'] = request.FILES.get('form_12a')
+        if request.FILES.get('form_13a'):
+            data['form_13a'] = request.FILES.get('form_13a')
 
-        return Response(serializer1.errors,status=status.HTTP_400_BAD_REQUEST)
+        print("Request Data:", data)
+        print("Request FILES:", request.FILES)
 
-        
+        # Validate & Save Data using Serializer
+        serializer = Rescue_serializers(data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+        print("Serializer Errors:", serializer.errors)
+        return Response({"message": "Failed to upload", "errors": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+
+    def get(self,request):
+        documents=Rescue.objects.all()
+        serializer=Rescue_serializers(documents,many=True)
+        return Response(serializer.data , status=status.HTTP_200_OK)
+
+    
+
