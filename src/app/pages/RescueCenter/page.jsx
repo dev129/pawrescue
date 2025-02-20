@@ -1,46 +1,24 @@
 'use client';
 import { useState } from 'react';
 import { AlertCircle, Upload, CheckCircle } from 'lucide-react';
-import  Button  from "../../../components/ui/Button";
+import Button from "../../../components/ui/Button";
 import { Card, CardContent, CardTitle, CardFooter } from "../../../components/ui/Card";
-import { Alert,AlertTitle, AlertDescription } from "../../../components/ui/alert";
+import { Alert, AlertTitle, AlertDescription } from "../../../components/ui/alert";
 
 const RescueCenterRegistration = () => {
   const [formData, setFormData] = useState({
-    // Basic Information
-    centerName: '',
-    registrationNumber: '',
-    yearEstablished: '',
-    
-    // Contact Information
+    center_name: '',
+    registration_number: '',
     email: '',
     phone: '',
-    alternatePhone: '',
-    
-    // Address Information
-    addressLine1: '',
-    addressLine2: '',
+    address_line1: '',
     city: '',
     state: '',
     pincode: '',
     landmark: '',
-    
-    // Operational Details
-    operatingHours: '',
-    emergencyService: false,
-    capacity: '',
-    
-    // Staff Information
-    veterinarians: '',
-    staffCount: '',
-    
-    // Facilities
     facilities: [],
-    specializations: [],
-    
-    // Documents
-    form12A: null,
-    form13A: null
+    form_12a: null,
+    form_13a: null
   });
 
   const [loading, setLoading] = useState(false);
@@ -93,65 +71,56 @@ const RescueCenterRegistration = () => {
     e.preventDefault();
     setLoading(true);
     setError('');
-
+  
     try {
       // Create FormData object for file upload
       const submitData = new FormData();
       
       // Append all form fields
       Object.keys(formData).forEach(key => {
-        if (key === 'form12A' || key === 'form13A') {
+        if (key === 'form_12a' || key === 'form_13a') {
           if (formData[key]) {
             submitData.append(key, formData[key]);
           }
         } else {
           submitData.append(key, 
             Array.isArray(formData[key]) 
-              ? JSON.stringify(formData[key]) 
+              ? JSON.stringify(formData[key])  // This stringifies the 'facilities' array
               : formData[key]
           );
         }
       });
-
+  
       // Example API call - replace with your actual endpoint
-      const response = await fetch('http://127.0.0.1:8000/api/rescue/', {
+      const response = await fetch('http://127.0.0.1:8000/upload/', {
         method: 'POST',
         body: submitData
       });
-
+  
       if (!response.ok) {
         throw new Error('Registration failed');
       }
-
+  
       setSuccess(true);
       // Reset form after successful submission
       setTimeout(() => {
         setSuccess(false);
         setFormData({
-          centerName: '',
-          registrationNumber: '',
-          yearEstablished: '',
+          center_name: '',
+          registration_number: '',
           email: '',
           phone: '',
-          alternatePhone: '',
-          addressLine1: '',
-          addressLine2: '',
+          address_line1: '',
           city: '',
           state: '',
           pincode: '',
           landmark: '',
-          operatingHours: '',
-          emergencyService: false,
-          capacity: '',
-          veterinarians: '',
-          staffCount: '',
-          facilities: [],
-          specializations: [],
-          form12A: null,
-          form13A: null
+          facilities: [],  // Ensure this is always an empty array, not undefined
+          form_12a: null,  // Ensure this is always null, not undefined
+          form_13a: null   // Ensure this is always null, not undefined
         });
       }, 3000);
-
+  
     } catch (err) {
       setError(err.message || 'Something went wrong');
     } finally {
@@ -180,8 +149,8 @@ const RescueCenterRegistration = () => {
                     </label>
                     <input
                       type="text"
-                      name="centerName"
-                      value={formData.centerName}
+                      name="center_name"
+                      value={formData.center_name || ''} // Fallback to empty string
                       onChange={handleInputChange}
                       required
                       className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
@@ -193,8 +162,8 @@ const RescueCenterRegistration = () => {
                     </label>
                     <input
                       type="text"
-                      name="registrationNumber"
-                      value={formData.registrationNumber}
+                      name="registration_number"
+                      value={formData.registration_number || ''} // Fallback to empty string
                       onChange={handleInputChange}
                       required
                       className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
@@ -214,7 +183,7 @@ const RescueCenterRegistration = () => {
                     <input
                       type="email"
                       name="email"
-                      value={formData.email}
+                      value={formData.email || ''} // Fallback to empty string
                       onChange={handleInputChange}
                       required
                       className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
@@ -227,7 +196,7 @@ const RescueCenterRegistration = () => {
                     <input
                       type="tel"
                       name="phone"
-                      value={formData.phone}
+                      value={formData.phone || ''} // Fallback to empty string
                       onChange={handleInputChange}
                       required
                       className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
@@ -246,8 +215,8 @@ const RescueCenterRegistration = () => {
                     </label>
                     <input
                       type="text"
-                      name="addressLine1"
-                      value={formData.addressLine1}
+                      name="address_line1"
+                      value={formData.address_line1 || ''} // Fallback to empty string
                       onChange={handleInputChange}
                       required
                       className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
@@ -261,7 +230,7 @@ const RescueCenterRegistration = () => {
                       <input
                         type="text"
                         name="city"
-                        value={formData.city}
+                        value={formData.city || ''} // Fallback to empty string
                         onChange={handleInputChange}
                         required
                         className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
@@ -274,7 +243,7 @@ const RescueCenterRegistration = () => {
                       <input
                         type="text"
                         name="state"
-                        value={formData.state}
+                        value={formData.state || ''} // Fallback to empty string
                         onChange={handleInputChange}
                         required
                         className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
@@ -287,7 +256,7 @@ const RescueCenterRegistration = () => {
                       <input
                         type="text"
                         name="pincode"
-                        value={formData.pincode}
+                        value={formData.pincode || ''} // Fallback to empty string
                         onChange={handleInputChange}
                         required
                         className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
@@ -301,7 +270,7 @@ const RescueCenterRegistration = () => {
                     <input
                       type="text"
                       name="landmark"
-                      value={formData.landmark}
+                      value={formData.landmark || ''} // Fallback to empty string
                       onChange={handleInputChange}
                       className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
                     />
@@ -324,7 +293,7 @@ const RescueCenterRegistration = () => {
                     <label key={facility} className="flex items-center space-x-2">
                       <input
                         type="checkbox"
-                        checked={formData.facilities.includes(facility)}
+                        checked={formData.facilities?.includes(facility) || false} // Ensure fallback to false
                         onChange={() => handleFacilityChange(facility)}
                         className="rounded border-gray-300"
                       />
@@ -346,19 +315,19 @@ const RescueCenterRegistration = () => {
                     <div className="relative">
                       <input
                         type="file"
-                        name="form12A"
+                        name="form_12a"
                         onChange={handleFileUpload}
                         accept=".pdf"
                         required
                         className="hidden"
-                        id="form12A"
+                        id="form_12a"
                       />
                       <label
-                        htmlFor="form12A"
+                        htmlFor="form_12a"
                         className="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 cursor-pointer"
                       >
                         <Upload className="w-5 h-5 mr-2" />
-                        {formData.form12A ? formData.form12A.name : 'Upload Form 12A'}
+                        {formData.form_12a?.name || 'Upload Form 12A'}
                       </label>
                     </div>
                   </div>
@@ -371,19 +340,19 @@ const RescueCenterRegistration = () => {
                     <div className="relative">
                       <input
                         type="file"
-                        name="form13A"
+                        name="form_13a"
                         onChange={handleFileUpload}
                         accept=".pdf"
                         required
                         className="hidden"
-                        id="form13A"
+                        id="form_13a"
                       />
                       <label
-                        htmlFor="form13A"
+                        htmlFor="form_13a"
                         className="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 cursor-pointer"
                       >
                         <Upload className="w-5 h-5 mr-2" />
-                        {formData.form13A ? formData.form13A.name : 'Upload Form 13A'}
+                        {formData.form_13a?.name || 'Upload Form 13A'}
                       </label>
                     </div>
                   </div>
@@ -393,33 +362,24 @@ const RescueCenterRegistration = () => {
               {/* Error Message */}
               {error && (
                 <Alert variant="destructive">
-                  <AlertCircle className="h-4 w-4" />
-                  <AlertDescription>
-                    {error}
-                  </AlertDescription>
+                  <AlertTitle>Oh no!</AlertTitle>
+                  <AlertDescription>{error}</AlertDescription>
                 </Alert>
               )}
 
               {/* Success Message */}
               {success && (
-                <Alert className="bg-green-50 text-green-700 border-green-200">
-                  <CheckCircle className="h-4 w-4" />
-                  <AlertDescription>
-                    Registration submitted successfully!
-                  </AlertDescription>
+                <Alert variant="success">
+                  <AlertTitle>Success!</AlertTitle>
+                  <AlertDescription>Your center has been successfully registered!</AlertDescription>
                 </Alert>
               )}
 
-              {/* Submit Button */}
-              <div className="flex justify-end">
-                <Button 
-                  type="submit" 
-                  disabled={loading}
-                  className="bg-blue-600 hover:bg-blue-700 text-white"
-                >
+              <CardFooter>
+                <Button type="submit" disabled={loading} className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>
                   {loading ? 'Submitting...' : 'Submit Registration'}
                 </Button>
-              </div>
+              </CardFooter>
             </form>
           </CardContent>
         </Card>
