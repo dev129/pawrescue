@@ -13,8 +13,6 @@
 # testing
 /coverage
 /src/app/pages/test
-/src/app/pages/TabChange.js
-/src/app/pages/TabChange.test.js
 
 # next.js
 /.next/
