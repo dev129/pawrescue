@@ -5,19 +5,19 @@ import { motion } from 'framer-motion';
 const SuccessStories = () => {
     const successStories = [
         {
-          name: "Luna",
+          name: "Goldy",
           description: "Found injured on the streets, now living her best life with a loving family",
-          image: "https://picsum.photos/200/300"
+          image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSA-29Dd85xMJLqcP623vyyTi0GOwdMNVSD_A&s"
         },
         {
-          name: "Max",
+          name: "Sheru",
           description: "Rescued from a drain during monsoon, now a therapy dog helping others",
-          image: "https://picsum.photos/200/300"
+          image: "https://cdn.pixabay.com/photo/2016/02/19/15/46/labrador-retriever-1210559_640.jpg"
         },
         {
-          name: "Bella",
+          name: "Bugs",
           description: "Survived a car accident, now spreading joy in her forever home",
-          image: "https://picsum.photos/200/300"
+          image: "https://i.pinimg.com/736x/b8/25/e1/b825e1484a21bb183466a3890df21c39.jpg"
         }
       ];
     

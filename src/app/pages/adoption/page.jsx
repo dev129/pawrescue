@@ -17,7 +17,7 @@ const animals = [
     personality: "Playful and friendly",
     health: "Fully vaccinated",
     specialNeeds: false,
-    image: "https://picsum.photos/200/200?random=1"
+    image: "https://www.thesprucepets.com/thmb/6xy_Tf4mfpkCnkXX6sb3_bquIz8=/4000x0/filters:no_upscale():strip_icc()/spruce-pets-golden-shepherd-dog-profile-0422121ca60341e9bdb903f8aabde1c5.jpg"
   },
   {
     id: 2,
@@ -28,7 +28,7 @@ const animals = [
     personality: "Independent and calm",
     health: "Spayed/Neutered",
     specialNeeds: false,
-    image: "https://picsum.photos/200/200?random=2"
+    image: "https://pethelpful.com/.image/w_3840,q_auto:good,c_limit/NDowMDAwMDAwMDAwMDcwMDQ1/cute-tabby-cat.png"
   },
   {
     id: 3,
@@ -39,7 +39,7 @@ const animals = [
     personality: "Gentle and curious",
     health: "Healthy",
     specialNeeds: false,
-    image: "https://picsum.photos/200/200?random=3"
+    image: "https://www.havahart.com/media/wysiwyg/hh/cms/lc/rabbits/hh-animals-rabbit-1.png"
   },
   {
     id: 4,
@@ -50,7 +50,7 @@ const animals = [
     personality: "Loyal and loving",
     health: "Senior care needed",
     specialNeeds: true,
-    image: "https://picsum.photos/200/200?random=4"
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiXhnIlGUdrapEHGIW_-k_7iGC45JYwZw2cw&s"
   },
   {
     id: 5,
@@ -61,7 +61,7 @@ const animals = [
     personality: "Chirpy and social",
     health: "Excellent",
     specialNeeds: false,
-    image: "https://picsum.photos/200/200?random=5"
+    image: "https://static.wixstatic.com/media/nsplsh_7a4f4b724e67755a774b6f~mv2_d_6165_4110_s_4_2.jpg/v1/fill/w_2500,h_1666,al_c/nsplsh_7a4f4b724e67755a774b6f~mv2_d_6165_4110_s_4_2.jpg"
   },
   {
     id: 6,
@@ -72,7 +72,7 @@ const animals = [
     personality: "Active and playful",
     health: "Healthy",
     specialNeeds: false,
-    image: "https://picsum.photos/200/200?random=6"
+    image: "https://nplimages.infradoxxs.com/cache/pcache2/01138363.jpg"
   }
 ];
 
@@ -86,14 +86,14 @@ const page = () => {
     : animals;
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-pink-50 to-pink-100 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-b from-pink-50 to-pink-100 relative overflow-hidden ">
       {/* Header */}
       <div className="bg-pink-700 text-white py-16 text-center">
         <motion.div
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
         >
-          <h1 className="text-5xl font-bold mb-4">
+          <h1 className="text-5xl font-bold mt-4">
             Find Your Perfect Companion
           </h1>
           <p className="text-xl max-w-2xl mx-auto">
@@ -176,7 +176,7 @@ const page = () => {
       
 
       {/* Footer */}
-      <Footer />
+      
     </div>
   );
 };

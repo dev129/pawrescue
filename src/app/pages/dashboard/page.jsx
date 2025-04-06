@@ -22,8 +22,8 @@ export default function LandingPage() {
   return (
     <>
       <Head>
-        <title>WildLife Connect - Connect Your Business with Nature</title>
-        <meta name="description" content="Wildlife Connect helps businesses integrate with nature conservation efforts" />
+        <title>PawRescue - Connect Your Business with Nature</title>
+        <meta name="description" content="PawRescue helps businesses integrate with nature conservation efforts" />
       </Head>
 
       {/* Header/Navigation */}
@@ -36,7 +36,7 @@ export default function LandingPage() {
               <circle cx="40" cy="40" r="5" fill="white"></circle>
               <circle cx="60" cy="40" r="5" fill="white"></circle>
             </svg>
-            <span className={`font-bold text-xl ${isScrolled ? 'text-rose-800' : 'text-white'}`}>WildLife Connect</span>
+            <span className={`font-bold text-xl ${isScrolled ? 'text-rose-800' : 'text-white'}`}>PawRescue</span>
           </div>
           
           {/* Desktop Navigation */}
@@ -272,7 +272,7 @@ export default function LandingPage() {
       <section id="benefits" className="py-20 bg-gray-50">
         <div className="container mx-auto px-6">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">How WildLife Connect Works for Businesses</h2>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">How PawRescue Works for Businesses</h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">Our simple three-step process helps you integrate sustainability into your business model.</p>
           </div>
           
@@ -374,7 +374,7 @@ export default function LandingPage() {
         <div className="container mx-auto px-6 relative z-10">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">What Businesses Say About Us</h2>
-            <p className="text-xl text-pink-100 max-w-2xl mx-auto">Hear from our customers who have transformed their businesses with WildLife Connect.</p>
+            <p className="text-xl text-pink-100 max-w-2xl mx-auto">Hear from our customers who have transformed their businesses with PawRescue.</p>
           </div>
           
           <div className="grid lg:grid-cols-3 gap-8">
@@ -398,7 +398,7 @@ export default function LandingPage() {
                   ))}
                 </div>
               </div>
-              <p className="text-gray-600 italic">"WildLife Connect helped us showcase our sustainability efforts to investors and customers alike. Our brand reputation has never been stronger."</p>
+              <p className="text-gray-600 italic">"PawRescue helped us showcase our sustainability efforts to investors and customers alike. Our brand reputation has never been stronger."</p>
             </div>
             
             {/* Testimonial 2 */}
@@ -444,7 +444,7 @@ export default function LandingPage() {
                   ))}
                 </div>
               </div>
-              <p className="text-gray-600 italic">"Partnering with WildLife Connect gave us access to businesses genuinely interested in conservation. The networking opportunities have been invaluable."</p>
+              <p className="text-gray-600 italic">"Partnering with PawRescue gave us access to businesses genuinely interested in conservation. The networking opportunities have been invaluable."</p>
             </div>
           </div>
         </div>

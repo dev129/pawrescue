@@ -2,6 +2,7 @@
 "use client";
 import { useState } from 'react';
 import Head from 'next/head';
+import { PawPrint } from 'lucide-react';
 
 export default function LoginSignup() {
   const [activeTab, setActiveTab] = useState('login');
@@ -13,33 +14,19 @@ export default function LoginSignup() {
   return (
     <>
       <Head>
-        <title>WildLife Connect - Login</title>
-        <meta name="description" content="Login to Wildlife Connect" />
+        <title>PawRescue - Login</title>
+        <meta name="description" content="Login to PawRescue" />
       </Head>
 
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-600 to-rose-800 py-12 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
         {/* Background Animal Shapes */}
-        <div className="absolute inset-0 pointer-events-none">
-          <svg className="absolute top-1/10 left-1/20 transform rotate-12 opacity-5" width="200" height="200" viewBox="0 0 100 100">
-            <path d="M50,10 C70,10 90,30 90,50 C90,70 70,90 50,90 C30,90 10,70 10,50 C10,30 30,10 50,10 Z" fill="#3c8d50"></path>
-          </svg>
-          <svg className="absolute bottom-1/20 right-1/10 transform -rotate-12 opacity-5" width="150" height="150" viewBox="0 0 100 100">
-            <path d="M20,20 C40,0 60,0 80,20 C100,40 100,60 80,80 C60,100 40,100 20,80 C0,60 0,40 20,20 Z" fill="#134e5e"></path>
-          </svg>
-          <svg className="absolute top-3/5 left-1/10 transform rotate-45 opacity-5" width="120" height="120" viewBox="0 0 100 100">
-            <path d="M50,15 C65,15 80,30 80,50 C80,70 65,85 50,85 C35,85 20,70 20,50 C20,30 35,15 50,15 Z" fill="#3c8d50"></path>
-          </svg>
-          <svg className="absolute top-1/5 right-1/10 opacity-5" width="180" height="180" viewBox="0 0 100 100">
-            <path d="M30,10 C50,0 70,0 90,10 C100,30 100,50 90,70 C70,90 50,90 30,70 C10,50 10,30 30,10 Z" fill="#134e5e"></path>
-          </svg>
-        </div>
-
+        
         <div className="flex w-full max-w-6xl shadow-2xl rounded-2xl overflow-hidden relative z-10">
           {/* Left Panel */}
           <div className="hidden md:block md:w-1/2 bg-gray-400 relative">
             <div className="absolute inset-0 bg-gradient-to-br from-pink-600/70 to-rose-800/70"></div>
             <div className="absolute bottom-10 left-10 right-10 text-white z-10">
-              <h1 className="text-3xl font-bold mb-5 drop-shadow-md">WildLife Connect</h1>
+              <h1 className="text-3xl font-bold mb-5 drop-shadow-md">PawRescue</h1>
               <p className="text-base leading-relaxed drop-shadow-md">
                 Join our community dedicated to celebrating and protecting the most magnificent creatures on our planet.
                 Discover the beauty of wildlife through our exclusive content and connections.
@@ -51,12 +38,7 @@ export default function LoginSignup() {
           <div className="w-full md:w-1/2 bg-white p-8 md:p-12 flex flex-col justify-center">
             <div className="mb-10 text-center">
               <div className="inline-block">
-                <svg className="w-16 h-16" viewBox="0 0 100 100" fill="none">
-                  <path d="M50,10 C70,10 90,30 90,50 C90,70 70,90 50,90 C30,90 10,70 10,50 C10,30 30,10 50,10 Z" fill="#3c8d50" opacity="0.2"></path>
-                  <path d="M30,30 C40,25 60,25 70,30 C75,40 75,60 70,70 C60,75 40,75 30,70 C25,60 25,40 30,30 Z" fill="#134e5e"></path>
-                  <circle cx="40" cy="40" r="5" fill="white"></circle>
-                  <circle cx="60" cy="40" r="5" fill="white"></circle>
-                </svg>
+              <PawPrint className="w-9 h-9 text-pink-600 group-hover:text-pink-700 transition-colors" />
               </div>
             </div>
 
