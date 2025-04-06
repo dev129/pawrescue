@@ -5,9 +5,6 @@ import { Card, CardContent } from '../../../components/ui/Card';
 import GetLocation from '../../../components/GetLocation';
 
 const RescueCenterCard = () => {
-  
-
-
   return (<>
   <GetLocation/>
           </>

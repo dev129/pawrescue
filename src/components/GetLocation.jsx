@@ -3,7 +3,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { Card, CardContent } from '../components/ui/Card';
 import { MapPin, Phone, Clock, Star } from 'lucide-react';
-import {GetLocationDetails} from '../components/GetLocationDetails';
+import { AiFillMail } from 'react-icons/ai';
 
 const GetLocation = () => {
   // Create a function to fetch the geolocation coordinates
@@ -12,8 +12,21 @@ const GetLocation = () => {
   const [rescueCenters, setRescueCenters] = useState([]);
   const [loading, setLoading] = useState(true);
   
-  setPostcode(GetLocationDetails(location.latitude, location.longitude)); // Call the function to get the location details
   // Function to call OpenCage API with latitude and longitude
+  async function OpenCageLoc(latitude, longitude) {
+    try {
+      const response = await fetch(
+        `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${process.env.NEXT_PUBLIC_OPENCAGE_API_KEY}`
+      );
+      const data = await response.json();
+      console.log(data.results[0].components);
+      setPostcode(data.results[0].components.postcode); // the post code extracted form here shall be used for the rendering of the data 
+
+    } catch (err) {
+      console.log('Error fetching location:', err);
+      setLoading(false);
+    }
+  }
 
   // Function to get the position and pass the coordinates to OpenCageLoc
   function showPosition(position) {
