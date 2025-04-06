@@ -19,3 +19,30 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+/* Custom scrollbar for the entire page */
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+
+/* Optional: Custom scrollbar for specific containers like chat area */
+.chat-scrollable {
+  max-height: 400px; /* Limit height to make scrolling visible */
+  overflow-y: scroll;
+}
+
+.chat-scrollable::-webkit-scrollbar {
+  width: 10px;
+}
+
+.chat-scrollable::-webkit-scrollbar-thumb {
+  background: #ff4081;
+  border-radius: 8px;
+}
+
+.chat-scrollable::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+

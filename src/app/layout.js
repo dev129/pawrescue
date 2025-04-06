@@ -2,6 +2,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 
 import "./globals.css";
 import Navbar from "../components/Navbar";
+import Footer from "../components/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,6 +17,8 @@ const geistMono = Geist_Mono({
 export const metadata = {
   title: "Paw Rescue",
   description: "Generated for GDG Cloud Paw Rescue",
+  name:'theme-color',
+  content:"#9d4edd"
 };
 
 export default function RootLayout({ children }) {
@@ -25,9 +28,9 @@ export default function RootLayout({ children }) {
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         {/* <Navbar/> */}
-        {/* <Navbar /> */}
-        
+        <Navbar />
         {children}
+        <Footer/>
       </body>
     </html>
   );

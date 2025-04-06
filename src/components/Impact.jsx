@@ -10,7 +10,7 @@ const Impact = () => {
         { icon: Calendar, value: "24/7", label: "Emergency Response" }
       ];
   return (
-    <div className="mb-20">
+    <div className="mb-20 bg-gradient-to-br from-rose-100 to-pink-200">
     <h2 className="text-4xl font-bold text-center text-gray-800 mb-12">Our Impact</h2>
     <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
       {stats.map((stat, index) => (

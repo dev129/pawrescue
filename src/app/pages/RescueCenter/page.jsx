@@ -4,25 +4,29 @@ import { AlertCircle, Upload, CheckCircle } from 'lucide-react';
 import Button from "../../../components/ui/Button";
 import { Card, CardContent, CardTitle, CardFooter } from "../../../components/ui/Card";
 import { Alert, AlertTitle, AlertDescription } from "../../../components/ui/alert";
+import axios from 'axios';
 
 const RescueCenterRegistration = () => {
-  const [formData, setFormData] = useState({
-    // Basic Information
-    center_name: '',
-    registration_number: '',
-    // Contact Information
+  const [userData, setUserData] = useState({
+    name: '',
     email: '',
-    phone: '',
-    // Address Information
+    password: '',
+    contact: '',
+    role: 'rescue_center', // Default role
+  });
+
+  const [rescueCenterDetails, setRescueCenterDetails] = useState({
+    name: '',
+    reg_num: '',
     address_line_1: '',
     city: '',
     state: '',
     pincode: '',
     landmark: '',
-    // Facilities
     facilities: [],
-    specializations: [],
-    // Documents
+  });
+
+  const [files, setFiles] = useState({
     form_12a: null,
     form_13a: null
   });
@@ -31,10 +35,19 @@ const RescueCenterRegistration = () => {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
 
-  // Handle text input changes
-  const handleInputChange = (e) => {
+  // Handle user data input changes
+  const handleUserInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setUserData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  // Handle rescue center details input changes
+  const handleRescueCenterInputChange = (e) => {
+    const { name, value } = e.target;
+    setRescueCenterDetails(prev => ({
       ...prev,
       [name]: value
     }));
@@ -42,21 +55,21 @@ const RescueCenterRegistration = () => {
 
   // Handle file uploads
   const handleFileUpload = (e) => {
-    const { name, files } = e.target;
-    if (files[0]) {
+    const { name, files: uploadedFiles } = e.target;
+    if (uploadedFiles[0]) {
       // Validate file type
-      if (!files[0].type.includes('pdf')) {
+      if (!uploadedFiles[0].type.includes('pdf')) {
         setError('Please upload PDF files only');
         return;
       }
       // Validate file size (5MB limit)
-      if (files[0].size > 5 * 1024 * 1024) {
+      if (uploadedFiles[0].size > 5 * 1024 * 1024) {
         setError('File size should be less than 5MB');
         return;
       }
-      setFormData(prev => ({
+      setFiles(prev => ({
         ...prev,
-        [name]: files[0]
+        [name]: uploadedFiles[0]
       }));
       setError('');
     }
@@ -64,7 +77,7 @@ const RescueCenterRegistration = () => {
 
   // Handle checkbox changes for facilities
   const handleFacilityChange = (facility) => {
-    setFormData(prev => ({
+    setRescueCenterDetails(prev => ({
       ...prev,
       facilities: prev.facilities.includes(facility)
         ? prev.facilities.filter(f => f !== facility)
@@ -80,76 +93,147 @@ const RescueCenterRegistration = () => {
   
     try {
       // Create FormData object for file upload
-      const submitData = new FormData();
+      const formData = new FormData();
       
-      // Append all form fields
-      Object.keys(formData).forEach(key => {
-        if (key === 'form_12a' || key === 'form_13a') {
-          if (formData[key]) {
-            submitData.append(key, formData[key]);
-          }
-        } else {
-          submitData.append(key, 
-            Array.isArray(formData[key]) 
-              ? JSON.stringify(formData[key])  // This stringifies the 'facilities' array
-              : formData[key]
-          );
-        }
+      // Append user data
+      Object.keys(userData).forEach(key => {
+        formData.append(key, userData[key]);
       });
-  
-      // Example API call - replace with your actual endpoint
-      const response = await fetch('http://127.0.0.1:8000/upload/', {
-        method: 'POST',
-        body: submitData
-      });
-  
-      if (!response.ok) {
-        throw new Error('Registration failed');
+      
+      // Append rescue center details as JSON string
+      formData.append('rescueCenterDetails', JSON.stringify(rescueCenterDetails));
+      
+      // Append files
+      if (files.form_12a) {
+        formData.append('form_12a', files.form_12a);
+      } else {
+        throw new Error('Form 12A is required');
       }
-  
+      
+      if (files.form_13a) {
+        formData.append('form_13a', files.form_13a);
+      } else {
+        throw new Error('Form 13A is required');
+      }
+      
+      // API call to register user with rescue center details
+      const response = await axios.post('http://127.0.0.1:5400/user',formData,{
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      // return console.log(response.data);
+    
+      
       setSuccess(true);
+      
       // Reset form after successful submission
       setTimeout(() => {
         setSuccess(false);
-        setFormData({
-          center_name: '',
-          registration_number: '',
+        setUserData({
+          name: '',
           email: '',
-          phone: '',
+          password: '',
+          contact: '',
+          role: 'rescue_center',
+        });
+        setRescueCenterDetails({
+          name: '',
+          reg_num: '',
           address_line_1: '',
           city: '',
           state: '',
           pincode: '',
           landmark: '',
           facilities: [],
-          specializations: [],
+        });
+        setFiles({
           form_12a: null,
           form_13a: null
         });
       }, 3000);
-  
     } catch (err) {
+      console.log(err);
       setError(err.message || 'Something went wrong');
     } finally {
+    
       setLoading(false);
     }
   };
-  
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 text-black">
+    <div className="min-h-screen bg-gradient-to-r from-pink-300 to-red-500 py-12 text-black">
       <div className="container mx-auto px-4">
         <Card className="max-w-4xl mx-auto">
           <CardTitle>
-            <CardTitle className="text-3xl font-bold text-center">
+            <CardTitle className="text-3xl font-bold text-center p-4">
               Rescue Center Registration
             </CardTitle>
           </CardTitle>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-8">
-              {/* Basic Information */}
+              {/* User Information */}
               <section className="space-y-4">
-                <h2 className="text-xl font-semibold">Basic Information</h2>
+                <h2 className="text-xl font-semibold">User Information</h2>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">
+                      Full Name *
+                    </label>
+                    <input
+                      type="text"
+                      name="name"
+                      value={userData.name}
+                      onChange={handleUserInputChange}
+                      required
+                      className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">
+                      Email Address *
+                    </label>
+                    <input
+                      type="email"
+                      name="email"
+                      value={userData.email}
+                      onChange={handleUserInputChange}
+                      required
+                      className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">
+                      Password *
+                    </label>
+                    <input
+                      type="password"
+                      name="password"
+                      value={userData.password}
+                      onChange={handleUserInputChange}
+                      required
+                      className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700">
+                      Contact Number *
+                    </label>
+                    <input
+                      type="tel"
+                      name="contact"
+                      value={userData.contact}
+                      onChange={handleUserInputChange}
+                      required
+                      className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
+                    />
+                  </div>
+                </div>
+              </section>
+
+              {/* Center Information */}
+              <section className="space-y-4">
+                <h2 className="text-xl font-semibold">Rescue Center Information</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700">
@@ -157,9 +241,9 @@ const RescueCenterRegistration = () => {
                     </label>
                     <input
                       type="text"
-                      name="center_name"
-                      value={formData.center_name}
-                      onChange={handleInputChange}
+                      name="name"
+                      value={rescueCenterDetails.name}
+                      onChange={handleRescueCenterInputChange}
                       required
                       className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
                     />
@@ -170,42 +254,9 @@ const RescueCenterRegistration = () => {
                     </label>
                     <input
                       type="text"
-                      name="registration_number"
-                      value={formData.registration_number}
-                      onChange={handleInputChange}
-                      required
-                      className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
-                    />
-                  </div>
-                </div>
-              </section>
-
-              {/* Contact Information */}
-              <section className="space-y-4">
-                <h2 className="text-xl font-semibold">Contact Information</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                      Email *
-                    </label>
-                    <input
-                      type="email"
-                      name="email"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      required
-                      className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
-                    />
-                  </div>
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700">
-                      Phone *
-                    </label>
-                    <input
-                      type="tel"
-                      name="phone"
-                      value={formData.phone}
-                      onChange={handleInputChange}
+                      name="reg_num"
+                      value={rescueCenterDetails.reg_num}
+                      onChange={handleRescueCenterInputChange}
                       required
                       className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
                     />
@@ -224,8 +275,8 @@ const RescueCenterRegistration = () => {
                     <input
                       type="text"
                       name="address_line_1"
-                      value={formData.address_line_1}
-                      onChange={handleInputChange}
+                      value={rescueCenterDetails.address_line_1}
+                      onChange={handleRescueCenterInputChange}
                       required
                       className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
                     />
@@ -238,8 +289,8 @@ const RescueCenterRegistration = () => {
                       <input
                         type="text"
                         name="city"
-                        value={formData.city}
-                        onChange={handleInputChange}
+                        value={rescueCenterDetails.city}
+                        onChange={handleRescueCenterInputChange}
                         required
                         className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
                       />
@@ -251,8 +302,8 @@ const RescueCenterRegistration = () => {
                       <input
                         type="text"
                         name="state"
-                        value={formData.state}
-                        onChange={handleInputChange}
+                        value={rescueCenterDetails.state}
+                        onChange={handleRescueCenterInputChange}
                         required
                         className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
                       />
@@ -264,8 +315,8 @@ const RescueCenterRegistration = () => {
                       <input
                         type="text"
                         name="pincode"
-                        value={formData.pincode}
-                        onChange={handleInputChange}
+                        value={rescueCenterDetails.pincode}
+                        onChange={handleRescueCenterInputChange}
                         required
                         className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
                       />
@@ -278,8 +329,8 @@ const RescueCenterRegistration = () => {
                     <input
                       type="text"
                       name="landmark"
-                      value={formData.landmark}
-                      onChange={handleInputChange}
+                      value={rescueCenterDetails.landmark}
+                      onChange={handleRescueCenterInputChange}
                       className="mt-1 block w-full rounded-md border border-gray-300 px-3 py-2"
                     />
                   </div>
@@ -301,7 +352,7 @@ const RescueCenterRegistration = () => {
                     <label key={facility} className="flex items-center space-x-2">
                       <input
                         type="checkbox"
-                        checked={formData.facilities.includes(facility)}
+                        checked={rescueCenterDetails.facilities.includes(facility) || false}
                         onChange={() => handleFacilityChange(facility)}
                         className="rounded border-gray-300"
                       />
@@ -335,7 +386,7 @@ const RescueCenterRegistration = () => {
                         className="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 cursor-pointer"
                       >
                         <Upload className="w-5 h-5 mr-2" />
-                        {formData.form_12a ? formData.form_12a.name : 'Upload Form 12A'}
+                        {files.form_12a ? files.form_12a.name : 'Upload Form 12A'}
                       </label>
                     </div>
                   </div>
@@ -360,7 +411,7 @@ const RescueCenterRegistration = () => {
                         className="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 cursor-pointer"
                       >
                         <Upload className="w-5 h-5 mr-2" />
-                        {formData.form_13a ? formData.form_13a.name : 'Upload Form 13A'}
+                        {files.form_13a ? files.form_13a.name : 'Upload Form 13A'}
                       </label>
                     </div>
                   </div>
@@ -371,32 +422,29 @@ const RescueCenterRegistration = () => {
               {error && (
                 <Alert variant="destructive">
                   <AlertCircle className="h-4 w-4" />
-                  <AlertDescription>
-                    {error}
-                  </AlertDescription>
+                  <AlertTitle>Error</AlertTitle>
+                  <AlertDescription>{error}</AlertDescription>
                 </Alert>
               )}
 
               {/* Success Message */}
               {success && (
-                <Alert className="bg-green-50 text-green-700 border-green-200">
-                  <CheckCircle className="h-4 w-4" />
-                  <AlertDescription>
-                    Registration submitted successfully!
-                  </AlertDescription>
+                <Alert variant="default" className="bg-green-50 border-green-200">
+                  <CheckCircle className="h-4 w-4 text-green-600" />
+                  <AlertTitle>Success!</AlertTitle>
+                  <AlertDescription>Your rescue center has been successfully registered!</AlertDescription>
                 </Alert>
               )}
 
-              {/* Submit Button */}
-              <div className="flex justify-end">
+              <CardFooter className="pt-6">
                 <Button 
                   type="submit" 
-                  disabled={loading}
-                  className="bg-blue-600 hover:bg-blue-700 text-white"
+                  disabled={loading} 
+                  className='bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded w-full'
                 >
                   {loading ? 'Submitting...' : 'Submit Registration'}
                 </Button>
-              </div>
+              </CardFooter>
             </form>
           </CardContent>
         </Card>

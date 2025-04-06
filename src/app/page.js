@@ -1,12 +1,10 @@
 'use client'
 import { motion } from 'framer-motion';
-import { Camera, Heart, Footprints, Upload, Phone, Home, PawPrint, Heart as HeartIcon, Info, Users, Calendar, MessageCircle } from 'lucide-react';
+import {  Heart,  Upload, Heart as HeartIcon, Info, Users,  MessageCircle } from 'lucide-react';
 import { useState } from 'react';
-import Chat from '../components/ui/Chat'
 import SuccessStories from '../components/SuccessStories';
 import Impact from '../components/Impact';
 import LandingPage from '../components/LandingPage';
-import Navbar from '../components/Navbar';
 
 const EmergencyPetReport = () => {
   const [isUploading, setIsUploading] = useState(false);
@@ -43,7 +41,7 @@ const EmergencyPetReport = () => {
 
   return (<>
       
-    <div className="min-h-screen bg-gradient-to-b from-rose-50 to-rose-100 relative overflow-hidden">
+    <div className="min-h-screen  bg-gradient-to-br from-rose-100 to-pink-200 relative overflow-hidden">
       {/* Floating Paw Prints Background */}
 
       {/* Main Content */}
@@ -89,38 +87,7 @@ const EmergencyPetReport = () => {
        <SuccessStories/>
       </div>
 
-      {/* Fixed Chat Component */}
-      <div className="fixed right-4 bottom-4 z-50">
-        {isChatOpen ? (
-          <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.8 }}
-          className="bg-white rounded-lg shadow-xl overflow-hidden"
-          >
-            <div className="w-full sm:w-96 h-[600px] relative">
-              <button 
-                onClick={() => setIsChatOpen(false)}
-                className="absolute top-2 right-2 z-10 p-2 hover:bg-gray-100 hover:text-rose-500 rounded-full"
-                >
-                ✕
-              </button>
-              <div className="h-full">
-                <Chat />
-              </div>
-            </div>
-          </motion.div>
-        ) : (
-          <motion.button
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
-          onClick={() => setIsChatOpen(true)}
-          className="bg-rose-500 text-white p-4 rounded-full shadow-lg hover:bg-rose-600 transition-colors"
-          >
-            <MessageCircle className="w-6 h-6" />
-          </motion.button>
-        )}
-      </div>
+      
 
       {/* Loading Overlay */}
       {isUploading && (

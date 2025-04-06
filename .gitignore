@@ -13,6 +13,7 @@
 # testing
 /coverage
 /src/app/pages/test
+/src/app/pages/test2
 
 # next.js
 /.next/
@@ -44,3 +45,10 @@ next-env.d.ts
 
 #django
 /product/venv
+/product/media
+
+#backend
+/backend/node_modules
+/backend/uploads
+/backend/.env
+

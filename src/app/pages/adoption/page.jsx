@@ -2,15 +2,11 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { 
-  PawPrint, Heart, Award, Shield, 
-  DogIcon, CatIcon, BirdIcon, 
+  DogIcon, CatIcon,  
   RabbitIcon, HeartHandshake 
 } from 'lucide-react';
 import Button from "../../../components/ui/Button";
-import { Card, CardContent } from "../../../components/ui/Card";
 import Footer from '../../../components/Footer';
-import chat from '../../../components/ui/Chat';
-
 const animals = [
   {
     id: 1,
@@ -90,9 +86,9 @@ const page = () => {
     : animals;
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-green-50 to-green-100 relative overflow-hidden">
+    <div className="min-h-screen bg-gradient-to-b from-pink-50 to-pink-100 relative overflow-hidden">
       {/* Header */}
-      <div className="bg-green-700 text-white py-16 text-center">
+      <div className="bg-pink-700 text-white py-16 text-center">
         <motion.div
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
@@ -121,8 +117,8 @@ const page = () => {
               variant={selectedSpecies === filter.species ? "default" : "outline"}
               className={`
                 ${selectedSpecies === filter.species 
-                  ? 'bg-green-600 text-white' 
-                  : 'border-green-600 text-green-600 hover:bg-green-50'
+                  ? 'bg-pink-600 text-white' 
+                  : 'border-pink-600 text-pink-600 hover:bg-pink-50'
                 } flex items-center gap-2
               `}
               onClick={() => setSelectedSpecies(
@@ -152,7 +148,7 @@ const page = () => {
               />
               <div className="p-6">
                 <div className="flex justify-between items-center mb-4">
-                  <h3 className="text-2xl font-bold text-green-800">{animal.name}</h3>
+                  <h3 className="text-2xl font-bold text-pink-800">{animal.name}</h3>
                   {animal.specialNeeds && (
                     <span className="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full text-xs">
                       Special Needs
@@ -167,7 +163,7 @@ const page = () => {
                   <p><strong>Health:</strong> {animal.health}</p>
                 </div>
                 <div className="mt-6">
-                  <Button className="w-full bg-green-600 hover:bg-green-700 flex items-center justify-center">
+                  <Button className="w-full bg-pink-600 hover:bg-pink-700 flex items-center justify-center">
                     <HeartHandshake className="mr-2" /> Adopt Me
                   </Button>
                 </div>

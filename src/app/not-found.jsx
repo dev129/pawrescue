@@ -68,9 +68,9 @@ const NotFound = () => {
 
   return (
     <>
-      <div className="min-h-screen bg-gray-100 dark:bg-black flex flex-col items-center justify-between relative overflow-hidden">
+      <div className="min-h-screen bg-gray-100 dark:bg-pink-500 flex flex-col items-center justify-between relative overflow-hidden">
         {/* Background pattern */}
-        <div className="absolute inset-0 bg-white dark:bg-black z-0" />
+        <div className="absolute inset-0 bg-gradient-to-r from-pink-500 to-red-500 z-0" />
         
         <div className="text-center relative z-10 flex-grow flex flex-col items-center justify-center dark:text-white">
           <h1 className="text-8xl md:text-9xl font-bold text-black dark:text-white tracking-wider mb-4 relative">
@@ -84,8 +84,8 @@ const NotFound = () => {
             FS!
           </h1>
           
-          <p className="text-xl md:text-2xl text-gray-600 mb-8 dark:text-white">
-            Are you lost?
+          <p className="text-xl md:text-2xl text-gray-600 mb-8 ">
+            Are you lost mate?
           </p>
 
           <div className="flex space-x-4">
