@@ -171,7 +171,7 @@ const ChatbotAssistant = () => {
           botMessage = { 
             id: Date.now() + 1, 
             type: 'bot', 
-            content: 'Here\'s the nearest animal rescue center:\nPaws & Hearts Rescue Center\n123 Animal Lane\nOpen 24/7\n(555) 123-4567\nWould you like to learn more about how you can help?', 
+            content: "Here's the nearest animal rescue center:\nRescue Dogs\nHouse No. 7101, 1, Street Number 14\nNew Janta Nagar, Nominee\nLudhiana, Punjab 141003\nOpen 24/7\n(555) 987-6543\nWould you like to learn more about how you can help?", 
             options: ['Adopt a pet', 'Make a donation'], 
             actions: ['adopt', 'donate'], 
             timestamp: new Date() 
@@ -245,7 +245,7 @@ const ChatbotAssistant = () => {
           botMessage = { 
             id: Date.now() + 1, 
             type: 'bot', 
-            content: 'Here\'s the nearest animal rescue center:\n Animal Aid Rescue Center\n 20,sutharwada, Savinna, Udaipur \n Open 24/7\n0294-2412980\nWould you like to learn more about how you can help?', 
+            content: "Here's the nearest animal rescue center:\nRescue Dogs\nHouse No. 7101, 1, Street Number 14\nNew Janta Nagar, Nominee\nLudhiana, Punjab 141003\nOpen 24/7\n(555) 987-6543\nWould you like to learn more about how you can help?", 
             options: ['Adopt a pet', 'Make a donation'], 
             actions: ['adopt', 'donate'], 
             timestamp: new Date() 
