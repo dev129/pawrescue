@@ -12,11 +12,11 @@ const Page = () => {
     return (
         <div className="min-h-screen bg-gradient-to-r from-pink-50 to-pink-100 text-white">
             <div className="container mx-auto px-4 py-16">
-                <div className="text-center mb-16">
-                    <h1 className="text-5xl md:text-7xl font-extrabold mb-4 text-transparent bg-clip-text text-white">
-                        Connect with the Code Wizards
+                <div className="text-center mt-16">
+                    <h1 className="text-5xl md:text-7xl font-extrabold mb-4 text-transparent bg-clip-text bg-pink-500">
+                        Connect with Us 
                     </h1>
-                    <p className="text-xl md:text-2xl text-black">
+                    <p className="text-xl md:text-2xl text-pink-400">
                         Got questions? Ideas? Or just want to say hi? We're all ears!
                     </p>
                 </div>
@@ -25,7 +25,7 @@ const Page = () => {
                     <div className="relative">
                         <div className="absolute inset-0 bg-gradient-to-r from-pink-600 to-pink-900 rounded-full blur-3xl opacity-30 animate-pulse"></div>
                         <img
-                            src="https://picsum.photos/800/600"
+                            src="https://www.shutterstock.com/image-vector/pets-adoption-animal-shelter-people-600nw-2217568789.jpg"
                             alt="Contact Image"
                             width={800}
                             height={600}
@@ -100,7 +100,7 @@ const Page = () => {
                             </div>
                             <button
                                 type="submit"
-                                className="w-full px-6 py-3 text-lg font-semibold text-white bg-gradient-to-r from-pink-600 to-pink-600 rounded-lg hover:from-pink-700 hover:to-pink-700 focus:outline-none focus:ring-2 focus:ring-pink-400 focus:ring-opacity-50 transform hover:scale-105 transition-all duration-300"
+                                className="w-full px-6 py-3 text-lg font-semibold text-white bg-gradient-to-r from-pink-600 to-rose-600 rounded-lg hover:from-pink-300 hover:to-pink-700 focus:outline-none focus:ring-2 focus:ring-pink-400 focus:ring-opacity-50 transform hover:scale-105 transition-all duration-300"
                             >
                                 <FaPaperPlane className="inline mr-2" /> Post It
                             </button>
