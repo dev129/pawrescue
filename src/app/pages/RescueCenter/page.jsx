@@ -117,7 +117,7 @@ const RescueCenterRegistration = () => {
       }
       
       // API call to register user with rescue center details
-      const response = await axios.post('http://127.0.0.1:5400/user',formData,{
+      const response = await axios.post('https://pawrescue-hok2.onrender.com/user',formData,{
         headers: {
           'Content-Type': 'multipart/form-data',
         },

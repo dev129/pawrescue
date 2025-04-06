@@ -61,7 +61,7 @@ const GetLocation = () => {
   //Nearest Rescue Center API call
   const getNearestRescueCenters = async () => {
     try {
-      const response = await axios.get(`http://localhost:5400/rescue-center/nearest/${postcode}`);
+      const response = await axios.get(`https://pawrescue-hok2.onrender.com/rescue-center/nearest/${postcode}`);
       console.log(response.data.rescueCenters?.[0] || response.data); // Handle the response data as needed
       
       // Check if response has rescueCenters property or is directly an array
